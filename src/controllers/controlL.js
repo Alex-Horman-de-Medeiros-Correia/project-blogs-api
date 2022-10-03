@@ -1,15 +1,15 @@
 require('dotenv').config();
 const express = require('express');
 // const jwt = require('jsonwebtoken');
-const loginService = require('../services/loginService');
-const tokenHelper = require('../helper/tokenHelper');
+const logando = require('../services/logando');
+const tokenH = require('../helper/tokenH');
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await loginService.findByLogin({ email, password });
+    const user = await logando.findByLogin({ email, password });
     if (!email || !password) {
       return res.status(400)
       .json({ message: 'Some required fields are missing' });
@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
       .json({ message: 'Invalid fields' });
     }
 
-    const { token } = await tokenHelper.tokenGenerate({ email });
+    const { token } = await tokenH.tokenGenerate({ email });
 
     return res.status(200).json({ token });
   } catch (error) {

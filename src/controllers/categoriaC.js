@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
-const categoryService = require('../services/categoryService');
-const tokenHelper = require('../helper/tokenHelper');
+const servico = require('../services/servico');
+const tokenH = require('../helper/tokenH');
 
 const router = express.Router();
 
@@ -13,8 +13,8 @@ router.post('/', async (req, res) => {
   if (!name) return res.status(400).json({ message: '"name" is required' });
 
   try {
-    tokenHelper.tokenVerify(authorization);
-    const { code, data } = await categoryService.create({ name });
+    tokenH.tokenVerify(authorization);
+    const { code, data } = await servico.create({ name });
 
     return res.status(code).json(data);
   } catch (err) {
@@ -27,8 +27,8 @@ router.get('/', async (req, res) => {
   if (!authorization) return res.status(401).json({ message: 'Token not found' });
 
   try {
-    tokenHelper.tokenVerify(authorization);
-    const result = await categoryService.findAll();
+    tokenH.tokenVerify(authorization);
+    const result = await servico.findAll();
     res.status(200).json(result);
   } catch (error) {
     res.status(401).json({ message: 'Expired or invalid token' });

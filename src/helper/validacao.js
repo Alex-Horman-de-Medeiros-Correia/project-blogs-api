@@ -1,7 +1,7 @@
-const joiValidation = require('./userJoi');
+const joiValidation = require('./usandoJoi');
 const { User } = require('../models');
 
-const userValidation = ({ displayName, email, password }) => {
+const validacao = ({ displayName, email, password }) => {
   const { error } = joiValidation.userSchema.validate({ displayName, email, password });
 
   if (error) {
@@ -20,4 +20,4 @@ const emailValidation = async ({ email }) => {
   return false;
 };
 
-module.exports = { userValidation, emailValidation };
+module.exports = { validacao, emailValidation };
